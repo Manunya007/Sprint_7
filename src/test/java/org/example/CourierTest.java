@@ -1,11 +1,14 @@
 package org.example;
 
 import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
@@ -20,16 +23,16 @@ public class CourierTest extends BaseTest{
         courier.setLogin(RandomStringUtils.randomAlphabetic(12))
         .setPassword(RandomStringUtils.randomAlphabetic(12));
     }
-@Step("Создание курьера, возвращается код 201")
+@DisplayName("Создание курьера")
     @Test
     public void courierCreateReturn201() {
 
 courierSteps
         .courierCreate(courier)
-        .statusCode(201)
+        .statusCode(SC_CREATED)
                 .body("ok", is(true));
     }
-    @Step("Создание дубликата курьера и возвращение ошибки 409")
+    @DisplayName("Создание дубликата курьера")
     @Test
     public void duplicateCourierCreateReturn409(){
 
@@ -37,28 +40,28 @@ courierSteps
                 .courierCreate(courier);
      courierSteps
                 .courierCreate(courier)
-                .statusCode(409)
+                .statusCode(SC_CONFLICT)
                 .body("message", equalTo("Этот логин уже используется"));
 
     }
-    @Step("Создание курьера без пароля и возвращение ошибки 400")
+    @DisplayName("Создание курьера без пароля")
     @Test
     public void courierCreateNoPasswordReturn400(){
         Courier courierWithoutPassword = new Courier()
                     .setLogin(RandomStringUtils.randomAlphabetic(12));
         courierSteps
                     .courierCreate(courierWithoutPassword)
-                    .statusCode(400)
+                    .statusCode(SC_BAD_REQUEST)
                     .body("message", is("Недостаточно данных для создания учетной записи"));
         }
-@Step("Создание курьера без логина и возвращение ошибки 400")
+@DisplayName("Создание курьера без логина")
     @Test
     public void courierCreateNoLoginReturn400(){
         Courier courierWithoutLogin = new Courier()
                 .setPassword(RandomStringUtils.randomAlphabetic(12));
         courierSteps
                 .courierCreate(courierWithoutLogin)
-                .statusCode(400)
+                .statusCode(SC_BAD_REQUEST)
                 .body("message", is("Недостаточно данных для создания учетной записи"));
     }
     @After
@@ -70,7 +73,7 @@ courierSteps
                     Integer id = response.extract().body().path("id");
                     if (id != null) {
                         courierSteps.deleteCourier(new Courier().setId(id))
-                                .statusCode(201);
+                                .statusCode(SC_CREATED);
                     }
                 }
             } catch (Exception e) {

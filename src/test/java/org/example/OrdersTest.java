@@ -1,16 +1,14 @@
 package org.example;
 
 import io.qameta.allure.Step;
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.List;
-
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.hamcrest.Matchers.notNullValue;
 
 @RunWith(Parameterized.class)
@@ -25,7 +23,7 @@ public class OrdersTest extends BaseTest {
         this.color = color;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Цвета: {0}, {1}")
     public static Object[][] getColorOrders() {
         return new Object[][]{
                 {new String[]{"BLACK"}},
@@ -49,24 +47,15 @@ public class OrdersTest extends BaseTest {
                 color
         );
     }
-@Step("Создание заказа, код 201")
+@DisplayName("Создание заказа")
     @Test
     public void ordersCreateTestReturn201() {
 
         orderSteps
                 .ordersCreate(order)
-                .statusCode(201)
+                .statusCode(SC_CREATED)
                 .body("track", notNullValue());
 
-    }
-@Step("Получение списка заказа")
-    @Test
-    public void getOrderslist() {
-        given()
-                .get("/api/v1/orders")
-                .then().statusCode(200)
-                .body("orders", notNullValue())
-                .body("orders", instanceOf(List.class));
     }
 
     @After

@@ -11,7 +11,7 @@ public class CourierSteps {
        return given()
                 .body(courier)
                 .when()
-                .post("/api/v1/courier")
+                .post(Endpoints.POST_CREATE_COURIER)
                 .then();
     }
     @Step("Получение логина курьера")
@@ -19,7 +19,7 @@ public class CourierSteps {
         return given()
                 .body(courier)
                 .when()
-                .post("/api/v1/courier/login")
+                .post(Endpoints.POST_LOGIN_COURIER)
                 .then();
     }
 @Step("Удаление курьера")
@@ -27,7 +27,7 @@ public class CourierSteps {
         return given()
                 .pathParams("id", courier.getId())
                 .when()
-                .delete("/api/v1/courier/{id}")
+                .delete(Endpoints.DELETE_COURIER)
                 .then();
     }
 }

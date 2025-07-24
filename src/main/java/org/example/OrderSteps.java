@@ -12,7 +12,7 @@ public class OrderSteps {
                 .header("Content-Type", "application/json")
                 .body(orderData)
                 .when()
-                .post("/api/v1/orders")
+                .post(Endpoints.POST_ORDER_CREATE)
                 .then();
     }
 @Step("Отмена заказа")
@@ -21,7 +21,7 @@ public class OrderSteps {
                 .header("Content-type", "application/json")
                 .queryParam("track", order.getTrack())
                 .when()
-                .put("/api/v1/orders/cancel")
+                .put(Endpoints.PUT_CANCEL_ORDER)
                 .then();
     }
 }

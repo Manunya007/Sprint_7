@@ -10,7 +10,7 @@ public class BaseTest {
     @Before
     public void startUp(){
         RestAssured.requestSpecification = new RequestSpecBuilder()
-                .setBaseUri("https://qa-scooter.praktikum-services.ru")
+                .setBaseUri(Endpoints.HOST)
                 .setContentType(ContentType.JSON)
                 .build();
         RestAssured.config = RestAssured
