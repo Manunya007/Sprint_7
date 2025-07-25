@@ -1,6 +1,5 @@
 package org.example;
 
-import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
@@ -14,10 +13,9 @@ import static org.hamcrest.Matchers.notNullValue;
 @RunWith(Parameterized.class)
 public class OrdersTest extends BaseTest {
 
+    String[] color;
     private OrderSteps orderSteps = new OrderSteps();
     private OrderData order;
-
-    String[] color;
 
     public OrdersTest(String[] color) {
         this.color = color;
@@ -47,7 +45,8 @@ public class OrdersTest extends BaseTest {
                 color
         );
     }
-@DisplayName("Создание заказа")
+
+    @DisplayName("Создание заказа")
     @Test
     public void ordersCreateTestReturn201() {
 

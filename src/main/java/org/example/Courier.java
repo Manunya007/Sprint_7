@@ -10,17 +10,13 @@ public class Courier {
         return login;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
     public Courier setLogin(String login) {
         this.login = login;
         return this;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public Courier setPassword(String password) {
@@ -28,6 +24,9 @@ public class Courier {
         return this;
     }
 
+    public Integer getId() {
+        return id;
+    }
 
     public Courier setId(Integer id) {
         this.id = id;

@@ -15,13 +15,21 @@ public class OrderSteps {
                 .post(Endpoints.POST_ORDER_CREATE)
                 .then();
     }
-@Step("Отмена заказа")
+
+    @Step("Отмена заказа")
     public ValidatableResponse cancelOrder(OrderData order) {
         return given()
                 .header("Content-type", "application/json")
                 .queryParam("track", order.getTrack())
                 .when()
                 .put(Endpoints.PUT_CANCEL_ORDER)
+                .then();
+    }
+
+    @Step("Получение списка заказов")
+    public ValidatableResponse ordersList() {
+        return given()
+                .get(Endpoints.GET_ORDER_LIST)
                 .then();
     }
 }

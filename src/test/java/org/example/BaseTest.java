@@ -8,7 +8,7 @@ import org.junit.Before;
 
 public class BaseTest {
     @Before
-    public void startUp(){
+    public void startUp() {
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setBaseUri(Endpoints.HOST)
                 .setContentType(ContentType.JSON)
